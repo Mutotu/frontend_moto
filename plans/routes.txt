@@ -1,0 +1,44 @@
+===backed Routes==
+
+homepage =>  route get all the bikes => '/', methods=["GET"] *
+
+detailsPage => get one bike by id => '/motorcycle/<int:moto.id>', methods=["GET"]*
+
+@login_req
+rentPage  rent a bike by id, user chooses number of days=> /rent/<int:user_id>/<int:moto.id>, methods=["GET", "POST"]
+
+
+
+
+create a user => "/create", methods=["POST"]
+
+get one user  => '/user', methods=["GET"]
+
+create a rental bike => "/motorcycle/", methods=["POST"]
+
+create a comment => "/comment/<user_id>/<moto_id>", methods=["POST"]
+
+get all the comments => "/comments/<int:moto_id>", methods=["GET"] for each bike
+
+delete a moto => "/delete/<int:id>", methods=["DELETE"]
+
+update a moto =>"/update/<int:id>", methods=["PUT"]
+
+update user => "update/<int:id>", methods=["PUT"]
+
+===frontend Routes===
+
+
+-homepage =>  '/'
+-signin =>   '/login'  
+-signup =>   '/signup'  
+-create posts => '/create'     ==>creates a new post   
+-allbikes =>  '/motorcycles/'         ==>pulls all the bikes available 
+-get my saved bikes =>'myBikes'
+-delete a bike => '/delete/<int:id>'  ==> delete an event from saved events
+-update => 'update/<int:id>'         ==> update an bike 
+-paymentPage user can pay via credit card =>  '/pay/<int:rent.id>', methods=["POST"]
+
+
+
+
