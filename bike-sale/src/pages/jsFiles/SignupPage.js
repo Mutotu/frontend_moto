@@ -18,25 +18,30 @@ const SignupPage = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    const createUser = await axios.post(`${env.BACKEND_URL}/signup`, {
-      first_name: fn,
-      last_name: ln,
-      username: username,
-      age: age,
-      role: role,
-      email: email,
-      password: password,
-    });
-    // console.log(createUser);
-    navigation("/signin");
+    try {
+      const createUser = await axios.post(`${env.BACKEND_URL}/signup`, {
+        first_name: fn,
+        last_name: ln,
+        username: username,
+        age: age,
+        role: role,
+        email: email,
+        password: password,
+      });
+      // console.log(createUser);
+      navigation("/signin");
+    } catch (error) {
+      setError("Fill all the boxes");
+    }
   };
-
+  const handleClick = () => {
+    setError("errorRemove");
+  };
   return (
     <div>
       <h2>Sign up for an accout!</h2>
 
-      {error && <div className='error'>{error}</div>}
+      {error && <div className={`${error} errorDisplay`}>{error}</div>}
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -45,6 +50,7 @@ const SignupPage = (props) => {
             id='signup-fn'
             value={fn}
             onChange={(e) => setFn(e.target.value)}
+            onClick={handleClick}
           />
         </div>
         <div>
@@ -53,6 +59,7 @@ const SignupPage = (props) => {
             id='signup-ln'
             value={ln}
             onChange={(e) => setLn(e.target.value)}
+            onClick={handleClick}
           />
         </div>
 
@@ -62,6 +69,7 @@ const SignupPage = (props) => {
             id='signup-username'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onClick={handleClick}
           />
         </div>
         <div>
@@ -70,6 +78,7 @@ const SignupPage = (props) => {
             id='signup-age'
             value={age}
             onChange={(e) => setAge(e.target.value)}
+            onClick={handleClick}
           />
         </div>
         <div>
@@ -79,6 +88,7 @@ const SignupPage = (props) => {
             type='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onClick={handleClick}
           />
         </div>
         <div>
@@ -88,21 +98,24 @@ const SignupPage = (props) => {
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onClick={handleClick}
           />
         </div>
         <div>
-          {/* <label htmlFor='role'>Choose a role:</label> */}
+          <label htmlFor='role'>Choose a role:</label>
 
-          {/* <select
+          <select
             name='role'
             id='role'
             value={role}
             onChange={(e) => setRole(e.target.value)}
+            onClick={handleClick}
           >
+            <option>-----</option>
             <option value='Owner'>Owner</option>
             <option value='Renter'>Renter</option>
-          </select> */}
-          <div>
+          </select>
+          {/* <div>
             <label htmlFor='signup-role'>Role:</label>
             <input
               id='signup-role'
@@ -110,7 +123,7 @@ const SignupPage = (props) => {
               value={role}
               onChange={(e) => setRole(e.target.value)}
             />
-          </div>
+          </div> */}
         </div>
         <div>
           <input type='submit' value='Sign up!'></input>

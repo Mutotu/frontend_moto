@@ -1,3 +1,4 @@
+import "../cssFiles/Signin.css";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
@@ -22,7 +23,7 @@ const SigninPage = (props) => {
           password: password,
         }
       );
-      console.log(error.response);
+      // console.log(error.response);
       if (response) {
         localStorage.setItem("userId", response.data.user.id);
         navigation("/");
@@ -31,11 +32,13 @@ const SigninPage = (props) => {
       setError("Enter valid info");
     }
   };
-
+  const handleClick = () => {
+    setError("errorRemove");
+  };
   return (
     <div>
       <h2>Log into your accout!</h2>
-      {error && <div className='error'>{error}</div>}
+      {error && <div className={`${error} errorDisplay`}>{error}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor='signup-username'>Username:</label>
@@ -43,6 +46,7 @@ const SigninPage = (props) => {
             id='signup-username'
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
+            onClick={handleClick}
           />
         </div>
         <div>
@@ -52,6 +56,7 @@ const SigninPage = (props) => {
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onClick={handleClick}
           />
         </div>
         <div>

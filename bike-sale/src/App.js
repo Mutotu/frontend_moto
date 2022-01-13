@@ -1,6 +1,7 @@
 import "./App.css";
-import Button from "react-bootstrap/Button";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+import Button from "react-bootstrap/Button";
 import env from "react-dotenv";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -29,10 +30,12 @@ function App() {
           Authorization: userId,
         },
       });
+      // console.log(response);
       // console.log(userId);
-      setUser(userId);
+      setUser(response);
     }
   };
+  // console.log(user);
   useEffect(() => {
     verifyUser();
   }, []);

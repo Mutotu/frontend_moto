@@ -1,3 +1,4 @@
+import "../cssFiles/HomePage.css";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
@@ -16,7 +17,7 @@ const HomePage = (props) => {
   //// when ready, user user.id in the axios
   // console.log(user);
   const get_all_bikes = async () => {
-    // console.log(process.env);
+    // console.log(user);
     const allBikes = await axios.get(`${env.BACKEND_URL}/motorcycles`, {
       headers: { authorization: localStorage.getItem("userId") },
     });
@@ -25,18 +26,18 @@ const HomePage = (props) => {
   };
   const noUser = () => {
     return (
-      <div>
+      <div className='home-form'>
         {bikes.map((item, i) => {
           return (
-            <ul key={item.id}>
+            <ul key={item.id} className='home-card'>
               <li>
                 <div>
                   <div>
                     <Link to={`${`/signup`}`}>{item.make}</Link>
-                    <h4>{item.description}</h4>
-
-                    <h4>item.model</h4>
-                    <h4>item.photo</h4>
+                    <h4>Description:{item.description}</h4>
+                    <h4>Make: {item.make}</h4>
+                    <h4>Model:{item.model}</h4>
+                    <h4>Photo:{item.photo}</h4>
                   </div>
                 </div>
               </li>
@@ -114,18 +115,19 @@ const HomePage = (props) => {
   const display = () => {
     if (localStorage.getItem("userId")) {
       return (
-        <div>
-          <p>My motorcycles</p>
+        <div className='home-form'>
+          <h2>My motorcycles</h2>
           {posts.map((item, i) => {
             return (
-              <div key={item.id}>
+              <div key={item.id} className='home-card'>
                 {/* bring b ack the img tag */}
-                <p>Photo{item.photo}</p>
+                <p>Photo: {item.photo}</p>
                 <h4>Make: {item.make}</h4>
                 <h4>Model: {item.model}</h4>
                 <h4>Year: {item.year}</h4>
                 <h5>Price: ${item.price}</h5>
                 <button
+                  className='delete-bn'
                   onClick={() => {
                     deleteMoto(item.id);
                     setBool(true);
@@ -142,6 +144,7 @@ const HomePage = (props) => {
                   }}
                 />
                 <button
+                  className='edit-bn'
                   onClick={() => {
                     update(item.id);
                   }}
@@ -167,13 +170,14 @@ const HomePage = (props) => {
       <div>
         {localStorage.getItem("userId") ? (
           <div>
-            <div>Welcome {user_id}</div>
+            {/* <div>Welcome {user.data.user.username}</div> */}
+            <h3>Welcome </h3>
             {posts.length > 0 ? (
               display()
             ) : (
               <p>
                 If you'd like to rent out your motorcycle, just go to page "Post
-                Bikes"
+                Bikes" Or go to all rentals page to rent a bike
               </p>
             )}
           </div>

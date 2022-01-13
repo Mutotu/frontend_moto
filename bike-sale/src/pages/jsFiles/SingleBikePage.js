@@ -10,10 +10,12 @@ const SingleBikePage = (props) => {
   const [moto, setMoto] = useState([]);
   const { motoId } = useParams();
   const getMoto = async () => {
-    const motoData = await axios(`http://localhost:5000/comments/${motoId}`, {
+    console.log(motoId);
+    const motoData = await axios(`${env.BACKEND_URL}/comments/${motoId}`, {
       headers: { authorization: localStorage.getItem("userId") },
     });
     setMoto(motoData.data.comments);
+    // console.log(motoData);
     moto.length > 0 ? setLoad(true) : setLoad(false);
   };
   const display = () => {

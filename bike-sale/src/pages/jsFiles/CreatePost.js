@@ -1,3 +1,4 @@
+import "../cssFiles/CreatePost.css";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
@@ -43,7 +44,7 @@ const CreatePost = (props) => {
     navigation("/");
   };
   return (
-    <div>
+    <div className='create-form'>
       <form onSubmit={submitEventInfo} className='myForm'>
         <div>
           <label htmlFor='photo'>Photo: </label>

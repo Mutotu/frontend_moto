@@ -1,0 +1,6 @@
+.commentForm > button {
+  background-color: rgb(116, 146, 146);
+}
+.commentForm {
+  position: relative;
+}

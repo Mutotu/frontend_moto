@@ -1,0 +1,10 @@
+.errorDisplay {
+  color: red;
+  border: solid black 2px;
+  width: 9rem;
+  margin: auto;
+}
+
+.errorRemove {
+  display: none;
+}

@@ -8,16 +8,30 @@ import PaymentPage from "./PaymentPage";
 
 const AllBikes = (props) => {
   const [bikes, setBikes] = useState([]);
+  const [owner, setOwner] = useState("");
 
   const get_all_bikes = async () => {
     // console.log(process.env);
-    const allBikes = await axios(`http://localhost:5000/motorcycles`, {
+    const allBikes = await axios(`${env.BACKEND_URL}/motorcycles`, {
       headers: { authorization: localStorage.getItem("userId") },
     });
     // console.log(allBikes.data.bikes);
     setBikes(allBikes.data.bikes);
   };
-  // console.log(bikes);
+
+  const get_user = async (userId) => {
+    try {
+      const foundUser = await axios.get(`${env.BACKEND_URL}/user/${userId}`);
+
+      setOwner(foundUser.data.user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    get_user();
+  }, []);
+
   useEffect(() => {
     get_all_bikes();
   }, []);
@@ -30,12 +44,24 @@ const AllBikes = (props) => {
             <li>
               <div>
                 <div>
-                  <Link to={`${item.id}`}>{item.make}</Link>
-                  <h4>{item.description}</h4>
+                  <Link to={`${item.id}`}>
+                    Click to see the comments on <h3>{item.make}</h3>
+                  </Link>
+                  <h4>Description: {item.description}</h4>
 
-                  <h4>{item.model}</h4>
-                  <h4>{item.photo}</h4>
+                  <h4>Model: {item.model}</h4>
                   <h4>Daily Price ${item.price}</h4>
+                  <h4>Year: {item.year}</h4>
+                  <h4>Photo: {item.photo}</h4>
+                  <a
+                    href={`mailto: ${owner.email}`}
+                    onClick={() => {
+                      // console.log(owner);
+                      get_user(item.user_id);
+                    }}
+                  >
+                    Send Email
+                  </a>
                 </div>
               </div>
             </li>

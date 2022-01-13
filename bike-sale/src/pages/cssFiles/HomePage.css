@@ -1,0 +1,45 @@
+body {
+  background: url("https://www.themotorental.com/wp-content/uploads/2020/04/moto-rental-in-spain-1.png");
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: auto;
+  background-position: center;
+  background-size: 40rem;
+  background-color: azure;
+}
+
+.home-form {
+  margin-top: 15rem;
+}
+
+.home-card {
+  border: solid 2px black;
+  width: 40rem;
+  height: auto;
+  position: inherit;
+  background-color: aliceblue;
+  border-radius: 200px;
+}
+
+h2 {
+  margin-top: 25rem;
+  text-decoration: underline;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.home-card > button {
+  border-radius: 20px;
+}
+
+.delete-bn:hover {
+  background-color: rgb(156, 10, 10);
+  color: white;
+}
+.edit-bn:hover {
+  background-color: rgb(11, 140, 190);
+  color: rgb(32, 31, 31);
+}
+
+.home-card > input {
+  border-radius: 10px;
+}

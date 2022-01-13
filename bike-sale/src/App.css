@@ -1,3 +1,10 @@
 .App {
   text-align: center;
 }
+ul {
+  list-style-type: none;
+  background-color: rgb(129, 245, 245);
+  border: thick 2px;
+  width: 60rem;
+  border-radius: 20px;
+}

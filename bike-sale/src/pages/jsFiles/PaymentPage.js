@@ -1,3 +1,4 @@
+import "../cssFiles/PaymentPage.css";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
@@ -6,19 +7,15 @@ import env from "react-dotenv";
 import { useParams } from "react-router-dom";
 
 const PaymentPage = (props) => {
+  const navigation = useNavigate();
   const { motoId } = useParams();
   const [moto, setMoto] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndeDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(Number);
-
-  // const getMoto = async () => {
-  //   let user_id = localStorage.getItem("userId");
-  //   const motoData = await axios(`/rent/${user_id}/${motoId}`, {
-  //     headers: { authorization: localStorage.getItem("userId") },
-  //   });
-  // setMoto(motoData.data.comments);
-  // };
+  const [fn, setFn] = useState("");
+  const [creditCard, setCreditCard] = useState("");
+  const [bool, setBool] = useState(false);
 
   const submitEventInfo = async (e) => {
     e.preventDefault();
@@ -43,9 +40,38 @@ const PaymentPage = (props) => {
         console.log(response);
       });
   };
+  const calculate = async () => {
+    const price = await axios.get(`${env.BACKEND_URL}/motorcycle/${motoId}`);
+    const calculatedTotal =
+      (Number(endDate.slice(-2)) - Number(startDate.slice(-2))) *
+      Number(price.data.moto.price);
+    setTotalPrice(calculatedTotal);
+    // console.log(calculatedTotal);
+  };
+  const successMessage = () => {
+    timeOut();
+    return (
+      <>
+        <div id='overlay' style={{ padding: "20px" }}>
+          <div id='text'>
+            <h3>Successful Payment...</h3>
+          </div>
+        </div>
+      </>
+    );
+  };
+  const timeOut = () => {
+    setTimeout(() => {
+      navigation("/myBikes");
+    }, 3000);
+  };
+  useEffect(() => {
+    calculate();
+  }, [endDate]);
   const display = () => {
     return (
       <div>
+        <div>{bool ? successMessage() : false}</div>
         <form onSubmit={submitEventInfo} className='myForm'>
           <div>
             <label htmlFor='startDate'>startDate: </label>
@@ -70,19 +96,42 @@ const PaymentPage = (props) => {
             />
           </div>
           <div>
-            <label htmlFor='fullName'>Full name: </label>
-            <input type='text' placeholder='Enter Full name' />
+            <label htmlFor='totalPrice'>Total: </label>
+            <input value={"$" + totalPrice} onChange={null} disabled />
           </div>
           <div>
-            <label htmlFor='creditCard'>creditCard: </label>
-            <input type='text' placeholder='Enter year' />
+            <label htmlFor='fullName'>Full name: </label>
+            <input
+              type='text'
+              placeholder='Enter Full name'
+              value={fn}
+              onChange={(e) => {
+                setFn(e.target.value);
+              }}
+            />
+          </div>
+          <div>
+            <label htmlFor='creditCard'>Credit Card: </label>
+            <input
+              type='number'
+              placeholder='Credit card number'
+              value={creditCard}
+              onChange={(e) => {
+                setCreditCard(e.target.value);
+              }}
+            />
           </div>
 
           <div>
             <input
               type='submit'
               value='Submit'
-              disabled={!startDate || !endDate ? true : false}
+              disabled={
+                !startDate || !endDate || !fn || !creditCard ? true : false
+              }
+              onClick={() => {
+                setBool(true);
+              }}
             />
           </div>
         </form>
